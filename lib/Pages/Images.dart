@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'ViewImage.dart';
 
 final Directory imageDir =
 new Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
@@ -44,8 +45,14 @@ class _ImagesState extends State<Images>  with AutomaticKeepAliveClientMixin{
       child: StaggeredGridView.countBuilder(crossAxisCount: 4,itemCount: imageList.length,  itemBuilder: (context,index){
         String imgPath = imageList[index];
         return Material(
+          elevation: 4.0,
           child: InkWell(
-            child: Image.file(File(imgPath),fit: BoxFit.cover,),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewImage(path: imgPath,) ) );
+            },
+            child: Hero(
+                tag: imgPath,
+                child: Image.file(File(imgPath),fit: BoxFit.cover,)),
           ),
         );
       }, staggeredTileBuilder: (i) =>

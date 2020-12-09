@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'ViewVideo.dart';
 
 final Directory videoDir =
     new Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
@@ -74,8 +75,17 @@ class _VideosState extends State<Videos> with AutomaticKeepAliveClientMixin {
                   builder: (context,snapshot){
                     if(snapshot.hasData){
                       return Container(
-                          padding: EdgeInsets.all(6.0),
-                          child: Image.file(File(snapshot.data),fit: BoxFit.cover));
+                        padding: EdgeInsets.all(6),
+                        child: Material(
+                           elevation: 6.0,
+                            child: InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewVideo(path: videoList[index])));
+                                },
+                                child: Hero(
+                                    tag: snapshot.data,
+                                    child: Image.file(File(snapshot.data),fit: BoxFit.cover)))),
+                      );
                     }
                     else{
                       return Center(

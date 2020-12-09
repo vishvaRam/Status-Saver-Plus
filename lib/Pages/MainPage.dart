@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> {
     print(permissionStatus);
     if(permissionStatus == "PermissionStatus.granted"){
       return MaterialApp(
-        debugShowCheckedModeBanner: false,theme: ThemeData(brightness: Brightness.dark),
+        debugShowCheckedModeBanner: false,theme: ThemeData(brightness: Brightness.light),
         home:DefaultTabController(
           length: 2,
           child: Scaffold(
