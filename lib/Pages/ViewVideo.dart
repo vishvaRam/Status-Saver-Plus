@@ -20,9 +20,25 @@ class _ViewVideoState extends State<ViewVideo> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         FloatingActionButton(
-          child: Icon(Icons.download_rounded),
+          child: Icon(Icons.download_rounded,size: 26,),
           heroTag: null,
           onPressed: () {},
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        FloatingActionButton(
+          child: Icon(_controller.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded , size: 26,) ,
+          heroTag: null,
+          onPressed: () {
+            setState(() {
+              if(_controller.value.isPlaying){
+                _controller.pause();
+              }else{
+                _controller.play();
+              }
+            });
+          },
         )
       ],
     );
@@ -39,8 +55,6 @@ class _ViewVideoState extends State<ViewVideo> {
     print(widget.path);
     super.initState();
 
-
-
   }
 
   @override
@@ -51,18 +65,20 @@ class _ViewVideoState extends State<ViewVideo> {
         title: Text("Video"),
       ),
       body: Center(
-        child: FutureBuilder(
-          future: _initVideoPlayerFuture,
-          // ignore: missing_return
-          builder: (context,snapshot){
-            if(snapshot.connectionState == ConnectionState.done){
-              return AspectRatio(aspectRatio: _controller.value.aspectRatio ,child: VideoPlayer(_controller),);
-            }else{
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
+        child: Container(
+          child: FutureBuilder(
+            future: _initVideoPlayerFuture,
+            // ignore: missing_return
+            builder: (context,snapshot){
+              if(snapshot.connectionState == ConnectionState.done){
+                return AspectRatio(aspectRatio: _controller.value.aspectRatio ,child: VideoPlayer(_controller),);
+              }else{
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ),
       ),
       floatingActionButton: floatingActionBtn(),
