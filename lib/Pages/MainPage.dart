@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'Videos.dart';
 import 'Images.dart';
+import 'Downloads.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -11,16 +12,14 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String permissionStatus = "";
 
-  listenForPermission() async{
-
+  listenForPermission() async {
     var status = await Permission.storage.status;
 
     print(status);
-    switch(status){
-
+    switch (status) {
       case PermissionStatus.denied:
         await Permission.storage.request();
-        var res =await Permission.storage.status;
+        var res = await Permission.storage.status;
         setState(() {
           permissionStatus = res.toString();
         });
@@ -40,8 +39,8 @@ class _MainPageState extends State<MainPage> {
 
       case PermissionStatus.undetermined:
         await Permission.storage.request();
-         var res =await Permission.storage.status;
-         print(res.toString());
+        var res = await Permission.storage.status;
+        print(res.toString());
         setState(() {
           permissionStatus = res.toString();
         });
@@ -55,7 +54,6 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -65,34 +63,45 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     print(permissionStatus);
-    if(permissionStatus == "PermissionStatus.granted"){
+    if (permissionStatus == "PermissionStatus.granted") {
       return MaterialApp(
-        debugShowCheckedModeBanner: false,theme: ThemeData(brightness: Brightness.light),
-        home:DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(title: Text("Status Saver"),bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.image)),
-                Tab(icon: Icon(Icons.video_collection)),
-              ],
-            ),),
-            body: TabBarView(
-              children: [
-                Images(),
-                Videos()
-              ],
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(brightness: Brightness.light),
+          home: DefaultTabController(
+            length: 2,
+            child: SafeArea(
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text("Status Saver"),
+                  actions: [
+                    Builder(
+                      builder:(context) => IconButton(icon: Icon(Icons.download_rounded), onPressed: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Downloads()));
+                        print("Clicked");
+                      }),
+                    )
+                  ],
+                  bottom: TabBar(
+                    tabs: [
+                      Tab(icon: Icon(Icons.image)),
+                      Tab(icon: Icon(Icons.video_collection)),
+                    ],
+                  ),
+                ),
+                body: TabBarView(
+                  children: [Images(), Videos()],
+                ),
+              ),
             ),
-          ),
-        )
-      );
-    }
-    else {
+          ));
+    } else {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          body: Center(child: Container(
-            child: Text("You need to give permission for accessing your storage."),
+          body: Center(
+              child: Container(
+            child:
+                Text("You need to give permission for accessing your storage."),
           )),
         ),
       );

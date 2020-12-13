@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:path/path.dart';
 
 
 class ViewImage extends StatefulWidget {
@@ -14,7 +14,7 @@ class _ViewImageState extends State<ViewImage> {
 
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
 
-  String savingPath = "/storage/emulated/0/Status Saver";
+  String savingPath = "/storage/emulated/0/Status Saver/Images";
   String fileName = "";
 
   @override
@@ -62,13 +62,13 @@ class _ViewImageState extends State<ViewImage> {
                       ),
                       ),
                       Padding(padding: EdgeInsets.all(10.0),),
-                      Text(str,style:TextStyle( fontSize:16.0, )),
+                      Text(str,style:TextStyle( fontSize:16.0, ),textAlign: TextAlign.center,),
                       Padding(padding: EdgeInsets.all(10.0),),
-                      Text("FileManager > Status Saver",style:TextStyle( fontSize:16.0, color: Colors.teal )),
+                      Text("FileManager > Status Saver > Images",style:TextStyle( fontSize:16.0, color: Colors.blue )),
                       Padding(padding: EdgeInsets.all(10.0),),
                       MaterialButton(
                         child: Text("Close"),
-                        color:Colors.teal,
+                        color:Colors.blue,
                         textColor: Colors.white,
                         onPressed:  ()=> Navigator.pop(context),
                       )
