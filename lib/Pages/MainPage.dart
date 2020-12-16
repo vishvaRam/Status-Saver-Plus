@@ -117,19 +117,23 @@ class _MainPageState extends State<MainPage> {
                     labelColor: backgroundColor,
                     tabs: [
                       Tab(
-                        child: Container(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text("Images"),
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text("Images",textAlign: TextAlign.center,),
+                            ),
+                          ],
                         ),
                       ),
                       Tab(
-                        child: Container(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text("Videos"),
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text("Videos",textAlign: TextAlign.center,),
+                            ),
+                          ],
                         ),
                       ),
                     ],

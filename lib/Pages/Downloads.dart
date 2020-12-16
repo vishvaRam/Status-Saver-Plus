@@ -139,19 +139,23 @@ class _DownloadsState extends State<Downloads> {
             labelColor: Theme.of(context).primaryColor,
             tabs: [
               Tab(
-                child: Container(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text("Images"),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Text("Images",textAlign: TextAlign.center,),
+                    ),
+                  ],
                 ),
               ),
               Tab(
-                child: Container(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text("Videos"),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Text("Videos",textAlign: TextAlign.center,),
+                    ),
+                  ],
                 ),
               ),
             ],
