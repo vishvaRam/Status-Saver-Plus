@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'ViewImage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 final Directory imageDir =
 new Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
@@ -32,36 +33,76 @@ class _ImagesState extends State<Images>  with AutomaticKeepAliveClientMixin{
   @override
   void initState() {
     print("Images init called");
-    getImages();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    getImages();
     super.build(context);
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: StaggeredGridView.countBuilder(crossAxisCount: 4,itemCount: imageList.length,  itemBuilder: (context,index){
-        String imgPath = imageList[index];
-        return Material(
-          elevation: 4.0,
-          child: InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewImage(path: imgPath,) ) );
-            },
-            child: Hero(
-                tag: imgPath,
-                child: Image.file(File(imgPath),fit: BoxFit.cover,)),
+    if(!Directory(imageDir.path).existsSync()){
+      return Container(
+        height: MediaQuery.of(context).size.height/1.2,
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        width: MediaQuery.of(context).size.width,
+        color: Theme.of(context).primaryColor,
+        child: Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(child: SvgPicture.asset("Assets/install.svg")),
+              Flexible(child: Text("Install WhatsApp and try again!",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+            ],
+          ),
+        ),
+      );
+    }else{
+      if(imageList.length==0){
+        return Container(
+          height: MediaQuery.of(context).size.height/1.2,
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          width: MediaQuery.of(context).size.width,
+          color: Theme.of(context).primaryColor,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(child: SvgPicture.asset("Assets/empty.svg")),
+              Flexible(child: Text("We can't find any images",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+            ],
           ),
         );
-      }, staggeredTileBuilder: (i) =>
-          StaggeredTile.count(2, i.isEven ? 2 : 3),
-        mainAxisSpacing: 8.0,
-        crossAxisSpacing: 8.0,),
-    );
+      }
+      else{
+        return Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Theme.of(context).primaryColor,
+          padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+          child: StaggeredGridView.countBuilder(crossAxisCount: 4,itemCount: imageList.length,  itemBuilder: (context,index){
+            String imgPath = imageList[index];
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Material(
+                elevation: 4.0,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewImage(path: imgPath,) ) );
+                  },
+                  child: Hero(
+                      tag: imgPath,
+                      child: Image.file(File(imgPath),fit: BoxFit.cover,)),
+                ),
+              ),
+            );
+          }, staggeredTileBuilder: (i) =>
+              StaggeredTile.count(2, i.isEven ? 2 : 3),
+            mainAxisSpacing: 8.0,
+            crossAxisSpacing: 8.0,),
+        );
+      }
+    }
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 }

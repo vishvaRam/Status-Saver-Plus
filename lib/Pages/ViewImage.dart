@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -50,6 +49,7 @@ class _ViewImageState extends State<ViewImage> {
         barrierDismissible: false,
         builder: (context){
           return SimpleDialog(
+            backgroundColor: Theme.of(context).primaryColor,
             children: [
               Center(
                 child: Container(
@@ -58,18 +58,19 @@ class _ViewImageState extends State<ViewImage> {
                     children: [
                       Text("Great, Saved in Gallery", style: TextStyle(
                           fontSize:20,
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                       ),
                       Padding(padding: EdgeInsets.all(10.0),),
-                      Text(str,style:TextStyle( fontSize:16.0, ),textAlign: TextAlign.center,),
+                      Text(str,style:TextStyle( fontSize:16.0,color: Colors.white ),textAlign: TextAlign.center,),
                       Padding(padding: EdgeInsets.all(10.0),),
-                      Text("FileManager > Status Saver > Images",style:TextStyle( fontSize:16.0, color: Colors.blue )),
+                      Text("FileManager > Status Saver > Images",style:TextStyle( fontSize:16.0, color: Theme.of(context).accentColor )),
                       Padding(padding: EdgeInsets.all(10.0),),
                       MaterialButton(
                         child: Text("Close"),
-                        color:Colors.blue,
-                        textColor: Colors.white,
+                        color: Theme.of(context).accentColor,
+                        textColor: Theme.of(context).primaryColor,
                         onPressed:  ()=> Navigator.pop(context),
                       )
                     ],
@@ -92,12 +93,16 @@ class _ViewImageState extends State<ViewImage> {
       ),
       body: Builder(
         builder:(context)=> Container(
-          height: MediaQuery.of(context).size.height/1.2,
-          width: MediaQuery.of(context).size.height,
-          child: Hero(
-              tag: "${widget.path}",
-              child: Image.file(File(widget.path))),
-         ),
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Theme.of(context).primaryColor,
+          child: Container(
+            color: Theme.of(context).primaryColor,
+            child: Hero(
+                tag: "${widget.path}",
+                child: Image.file(File(widget.path))),
+           ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async{

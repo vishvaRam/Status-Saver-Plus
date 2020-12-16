@@ -96,6 +96,7 @@ class _ViewVideoState extends State<ViewVideo> {
           barrierDismissible: false,
           builder: (context){
             return SimpleDialog(
+              backgroundColor: Theme.of(context).primaryColor,
               children: [
                 Center(
                   child: Container(
@@ -104,18 +105,19 @@ class _ViewVideoState extends State<ViewVideo> {
                       children: [
                         Text("Great, Saved in Gallery", style: TextStyle(
                             fontSize:20,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
+                          color: Colors.white
                         ),
                         ),
                         Padding(padding: EdgeInsets.all(10.0),),
-                        Text(str,style:TextStyle( fontSize:16.0, ),textAlign: TextAlign.center,),
+                        Text(str,style:TextStyle( fontSize:16.0,color: Colors.white ),textAlign: TextAlign.center,),
                         Padding(padding: EdgeInsets.all(10.0),),
-                        Text("FileManager > Status Saver > Videos",style:TextStyle( fontSize:16.0, color: Colors.blue )),
+                        Text("FileManager > Status Saver > Videos",style:TextStyle( fontSize:16.0, color: Theme.of(context).accentColor )),
                         Padding(padding: EdgeInsets.all(10.0),),
                         MaterialButton(
                           child: Text("Close"),
-                          color:Colors.blue,
-                          textColor: Colors.white,
+                          color:Theme.of(context).accentColor,
+                          textColor: Theme.of(context).primaryColor,
                           onPressed:  ()=> Navigator.pop(context),
                         )
                       ],
@@ -159,21 +161,26 @@ class _ViewVideoState extends State<ViewVideo> {
       appBar: AppBar(
         title: Text("Video"),
       ),
-      body: Center(
-        child: Container(
-          child: FutureBuilder(
-            future: _initVideoPlayerFuture,
-            // ignore: missing_return
-            builder: (context,snapshot){
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: Theme.of(context).primaryColor,
+        child: Center(
+          child: Container(
+            child: FutureBuilder(
+              future: _initVideoPlayerFuture,
+              // ignore: missing_return
+              builder: (context,snapshot){
 
-              if(snapshot.connectionState == ConnectionState.done){
-                return AspectRatio(aspectRatio: _controller.value.aspectRatio ,child: VideoPlayer(_controller),);
-              }else{
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
+                if(snapshot.connectionState == ConnectionState.done){
+                  return AspectRatio(aspectRatio: _controller.value.aspectRatio ,child: VideoPlayer(_controller),);
+                }else{
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),

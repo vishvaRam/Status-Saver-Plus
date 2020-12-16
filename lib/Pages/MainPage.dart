@@ -10,6 +10,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final Color backgroundColor = Color(0xff1C1D36);
+  final Color accentColor = Color(0xff4FE3C1);
+
   String permissionStatus = "";
 
   listenForPermission() async {
@@ -66,25 +69,69 @@ class _MainPageState extends State<MainPage> {
     if (permissionStatus == "PermissionStatus.granted") {
       return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(brightness: Brightness.light),
+          theme: ThemeData(
+              brightness: Brightness.light,
+              primaryColor: backgroundColor,
+              accentColor: accentColor),
           home: DefaultTabController(
             length: 2,
             child: SafeArea(
               child: Scaffold(
+                drawer: Drawer(
+                  elevation: 12.0,
+                  child: Container(
+                    color: backgroundColor,
+                    child: ListView(
+                      children: [
+                        ListTile(
+                          title: Text("H1")
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 appBar: AppBar(
+                  elevation: 0.0,
                   title: Text("Status Saver"),
                   actions: [
                     Builder(
-                      builder:(context) => IconButton(icon: Icon(Icons.download_rounded), onPressed: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Downloads()));
-                        print("Clicked");
-                      }),
+                      builder: (context) => IconButton(
+                          icon: Icon(Icons.download_rounded),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        Downloads()));
+                          }),
                     )
                   ],
                   bottom: TabBar(
+                    unselectedLabelColor: accentColor,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: accentColor,
+                    ),
+                    indicatorColor: accentColor,
+                    labelColor: backgroundColor,
                     tabs: [
-                      Tab(icon: Icon(Icons.image)),
-                      Tab(icon: Icon(Icons.video_collection)),
+                      Tab(
+                        child: Container(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text("Images"),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text("Videos"),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -97,11 +144,16 @@ class _MainPageState extends State<MainPage> {
     } else {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: backgroundColor,
+            accentColor: accentColor),
         home: Scaffold(
+          backgroundColor: backgroundColor,
           body: Center(
               child: Container(
             child:
-                Text("You need to give permission for accessing your storage."),
+                Text("You need to give permission for accessing your storage.",style: TextStyle(color: accentColor),),
           )),
         ),
       );
