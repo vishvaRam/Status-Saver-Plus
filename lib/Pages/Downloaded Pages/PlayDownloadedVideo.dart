@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:io';
+import 'package:share/share.dart';
 
 class DownloadedVideoPlayer extends StatefulWidget {
   final String path;
@@ -33,6 +34,10 @@ class _DownloadedVideoPlayerState extends State<DownloadedVideoPlayer> {
             });
           },
         ),
+        SizedBox(height: 15.0,),
+        FloatingActionButton(onPressed: (){
+          Share.shareFiles([widget.path]);
+        },heroTag: null,child: Icon(Icons.share_rounded,size: 26,),),
         SizedBox(height: 15.0,),
         FloatingActionButton(onPressed: () async{
           try{

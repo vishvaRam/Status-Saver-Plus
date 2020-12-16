@@ -71,7 +71,9 @@ class _VideosState extends State<Videos> with AutomaticKeepAliveClientMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Flexible(child: SvgPicture.asset("Assets/install.svg")),
+            Flexible(child: SvgPicture.asset("Assets/install.svg",placeholderBuilder: (BuildContext context) => Container(
+                padding: const EdgeInsets.all(30.0),
+                child: const CircularProgressIndicator()))),
             Flexible(child: Text("Install WhatsApp and try again!",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
           ],
         ),
@@ -86,7 +88,9 @@ class _VideosState extends State<Videos> with AutomaticKeepAliveClientMixin {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(child: SvgPicture.asset("Assets/empty.svg")),
+              Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                  padding: const EdgeInsets.all(30.0),
+                  child: const CircularProgressIndicator()))),
               Flexible(child: Text("We can't find any videos",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
             ],
           ),

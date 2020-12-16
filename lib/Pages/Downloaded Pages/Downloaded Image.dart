@@ -27,8 +27,10 @@ class _DownloadedImagesState extends State<DownloadedImages> with AutomaticKeepA
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Flexible(child: SvgPicture.asset("Assets/empty.svg")),
-            Flexible(child: Text("You haven't saved images yet",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+            Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                padding: const EdgeInsets.all(30.0),
+                child: const CircularProgressIndicator()))),
+            Flexible(child: Text("We can't find any images",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
           ],
         ),
       );

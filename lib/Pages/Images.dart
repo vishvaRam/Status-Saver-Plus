@@ -46,14 +46,14 @@ class _ImagesState extends State<Images>  with AutomaticKeepAliveClientMixin{
         padding: EdgeInsets.symmetric(horizontal: 30),
         width: MediaQuery.of(context).size.width,
         color: Theme.of(context).primaryColor,
-        child: Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(child: SvgPicture.asset("Assets/install.svg")),
-              Flexible(child: Text("Install WhatsApp and try again!",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(child: SvgPicture.asset("Assets/install.svg",placeholderBuilder: (BuildContext context) => Container(
+                padding: const EdgeInsets.all(30.0),
+                child: const CircularProgressIndicator()))),
+            Flexible(child: Text("Install WhatsApp and try again!",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+          ],
         ),
       );
     }else{
@@ -66,7 +66,9 @@ class _ImagesState extends State<Images>  with AutomaticKeepAliveClientMixin{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(child: SvgPicture.asset("Assets/empty.svg")),
+              Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                  padding: const EdgeInsets.all(30.0),
+                  child: const CircularProgressIndicator()))),
               Flexible(child: Text("We can't find any images",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
             ],
           ),
