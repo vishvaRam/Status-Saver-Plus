@@ -107,21 +107,20 @@ class _DownloadsState extends State<Downloads> {
             appBar: AppBar(
           title: Text("Saved"),
         ),
-        body: Container(
-              height: MediaQuery.of(context).size.height/1.2,
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
-                padding: const EdgeInsets.all(30.0),
-                child: const CircularProgressIndicator()))),
-            Flexible(child: Text("You haven't saved anything yet",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
-          ],
-        ),
-      )
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                    padding: const EdgeInsets.all(30.0),
+                    child: const CircularProgressIndicator()))),
+                Flexible(child: Text("You haven't saved anything yet",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+              ],
+            ),
+          ),
+        )
       ));
     } else {
       return DefaultTabController(length: 2, child: SafeArea( child: Scaffold(
@@ -162,34 +161,32 @@ class _DownloadsState extends State<Downloads> {
           ),
         ),
         body: TabBarView(children: [
-          images ?  DownloadedImages(imageList: imageList.reversed.toList(),getImages: getImages,) : Container(
-            height: MediaQuery.of(context).size.height/1.2,
+          images ?  DownloadedImages(imageList: imageList.reversed.toList(),getImages: getImages,) : Padding(
             padding: EdgeInsets.symmetric(horizontal: 30),
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).primaryColor,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
-                    padding: const EdgeInsets.all(30.0),
-                    child: const CircularProgressIndicator()))),
-                Flexible(child: Text("You haven't saved any images yet",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
-              ],
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                      padding: const EdgeInsets.all(30.0),
+                      child: const CircularProgressIndicator()))),
+                  Flexible(child: Text("You haven't saved any images yet",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+                ],
+              ),
             ),
           ),
-          videos ?  DownloadedVideos(videoList: videoList.reversed.toList(),getVideos: getVideos,) : Container(
-            height: MediaQuery.of(context).size.height/1.2,
+          videos ?  DownloadedVideos(videoList: videoList.reversed.toList(),getVideos: getVideos,) : Padding(
             padding: EdgeInsets.symmetric(horizontal: 30),
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).primaryColor,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
-                    padding: const EdgeInsets.all(30.0),
-                    child: const CircularProgressIndicator()))),
-                Flexible(child: Text("You haven't saved any videos yet",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
-              ],
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                      padding: const EdgeInsets.all(30.0),
+                      child: const CircularProgressIndicator()))),
+                  Flexible(child: Text("You haven't saved any videos yet",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+                ],
+              ),
             ),
           )
         ]),

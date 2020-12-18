@@ -18,29 +18,26 @@ class _DownloadedImagesState extends State<DownloadedImages> with AutomaticKeepA
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     if(widget.imageList.length == 0){
-      return Container(
-        height: MediaQuery.of(context).size.height/1.2,
+      return Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
-        width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
-                padding: const EdgeInsets.all(30.0),
-                child: const CircularProgressIndicator()))),
-            Flexible(child: Text("We can't find any images",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                  padding: const EdgeInsets.all(30.0),
+                  child: const CircularProgressIndicator()))),
+              Flexible(child: Text("We can't find any images",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+            ],
+          ),
         ),
       );
     }
     else{
-      return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).primaryColor,
-        padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 12.0),
         child: StaggeredGridView.countBuilder(crossAxisCount: 4,itemCount: widget.imageList.length,  itemBuilder: (context,index){
           String imgPath = widget.imageList[index];
           return ClipRRect(

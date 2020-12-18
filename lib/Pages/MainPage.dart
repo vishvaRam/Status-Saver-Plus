@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'Videos.dart';
@@ -67,36 +70,42 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     print(permissionStatus);
     if (permissionStatus == "PermissionStatus.granted") {
+      print("permission in true");
+
       return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               brightness: Brightness.light,
               primaryColor: backgroundColor,
+              canvasColor: backgroundColor,
               accentColor: accentColor),
           home: DefaultTabController(
             length: 2,
             child: SafeArea(
               child: Scaffold(
-                drawer: Drawer(
-                  elevation: 12.0,
-                  child: Container(
-                    color: backgroundColor,
-                    child: ListView(
-                      children: [
-                        ListTile(
-                          title: Text("H1")
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                // drawer: Drawer(
+                //   elevation: 12.0,
+                //   child: ListView(
+                //     children: [
+                //       ListTile(
+                //         title: Text("H1")
+                //       )
+                //     ],
+                //   ),
+                // ),
                 appBar: AppBar(
                   elevation: 0.0,
-                  title: Text("Status Saver"),
+                  title: Row(
+                    children: [
+                      Image.asset("Assets/img.png",height: 35,),
+                      SizedBox(width: 10,),
+                      Text("Status Saver Plus"),
+                    ],
+                  ),
                   actions: [
                     Builder(
                       builder: (context) => IconButton(
-                          icon: Icon(Icons.download_rounded),
+                          icon: Icon(Icons.download_rounded,size: 26,),
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -146,6 +155,7 @@ class _MainPageState extends State<MainPage> {
             ),
           ));
     } else {
+      print("permission in false");
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

@@ -76,26 +76,19 @@ class _DownloadedVideoPlayerState extends State<DownloadedVideoPlayer> {
           appBar: AppBar(
             title: Text("Video"),
           ),
-          body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).primaryColor,
-            child: Center(
-              child: Container(
-                child: FutureBuilder(
-                  future: _initVideoPlayerFuture,
-                  builder: (context,snapshot){
+          body: Center(
+            child: FutureBuilder(
+              future: _initVideoPlayerFuture,
+              builder: (context,snapshot){
 
-                    if(snapshot.connectionState == ConnectionState.done){
-                      return AspectRatio(aspectRatio: _controller.value.aspectRatio ,child: VideoPlayer(_controller),);
-                    }else{
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
-              ),
+                if(snapshot.connectionState == ConnectionState.done){
+                  return AspectRatio(aspectRatio: _controller.value.aspectRatio ,child: VideoPlayer(_controller),);
+                }else{
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
           ),
           floatingActionButton: floatingActionBtn(),

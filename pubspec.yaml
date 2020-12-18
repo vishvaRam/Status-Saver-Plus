@@ -51,6 +51,8 @@ flutter:
   assets:
     - Assets/empty.svg
     - Assets/install.svg
+    - Assets/img.png
+    - Assets/hello.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

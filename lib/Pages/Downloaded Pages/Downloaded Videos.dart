@@ -33,29 +33,25 @@ class _DownloadedVideosState extends State<DownloadedVideos> with AutomaticKeepA
   Widget build(BuildContext context) {
     super.build(context);
     if(widget.videoList.length == 0){
-      return Container(
-        height: MediaQuery.of(context).size.height/1.2,
+      return Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
-        width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
-                padding: const EdgeInsets.all(30.0),
-                child: const CircularProgressIndicator()),
-            )),
-            Flexible(child: Text("We can't find any videos",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                  padding: const EdgeInsets.all(30.0),
+                  child: const CircularProgressIndicator()),
+              )),
+              Flexible(child: Text("We can't find any videos",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+            ],
+          ),
         ),
       );
     }
     else{
-      return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).primaryColor,
-        padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 12.0),
         child: GridView.builder(
             itemCount: widget.videoList.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,8 +61,8 @@ class _DownloadedVideosState extends State<DownloadedVideos> with AutomaticKeepA
                 future: getThumbnail(widget.videoList[index]),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Container(
-                      padding: EdgeInsets.all(6),
+                    return Padding(
+                      padding: const EdgeInsets.all(6.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Material(

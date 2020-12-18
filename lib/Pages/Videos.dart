@@ -63,83 +63,78 @@ class _VideosState extends State<Videos> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     if (!Directory('${videoDir.path}').existsSync()) {
-      return Container(
-        height: MediaQuery.of(context).size.height/1.2,
+      return Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
-        width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(child: SvgPicture.asset("Assets/install.svg",placeholderBuilder: (BuildContext context) => Container(
-                padding: const EdgeInsets.all(30.0),
-                child: const CircularProgressIndicator()))),
-            Flexible(child: Text("Install WhatsApp and try again!",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(child: SvgPicture.asset("Assets/install.svg",placeholderBuilder: (BuildContext context) => Container(
+                  padding: const EdgeInsets.all(30.0),
+                  child: const CircularProgressIndicator()))),
+              Flexible(child: Text("Install WhatsApp and try again!",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+            ],
+          ),
         ),
       );
     } else {
       if(videoList.length==0){
-        return Container(
-          height: MediaQuery.of(context).size.height/1.2,
+        return Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
-          width: MediaQuery.of(context).size.width,
-          color: Theme.of(context).primaryColor,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
-                  padding: const EdgeInsets.all(30.0),
-                  child: const CircularProgressIndicator()))),
-              Flexible(child: Text("We can't find any videos",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
-            ],
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(child: SvgPicture.asset("Assets/empty.svg",placeholderBuilder: (BuildContext context) => Container(
+                    padding: const EdgeInsets.all(30.0),
+                    child: const CircularProgressIndicator()))),
+                Flexible(child: Text("We can't find any videos",style: TextStyle(fontSize: 16.0,color:Theme.of(context).accentColor, ),))
+              ],
+            ),
           ),
         );
       }
       else{
-        return Container(
-            color: Theme.of(context).primaryColor,
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
-            child: GridView.builder(
-                itemCount: videoList.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: 2.0 / 3.0),
-                itemBuilder: (context, index) {
-                  return FutureBuilder(
-                    future: getThumbnail(videoList[index]),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Container(
-                          padding: EdgeInsets.all(4),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Material(
-                                elevation: 6.0,
-                                child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => ViewVideo(
-                                                  path: videoList[index])));
-                                    },
-                                    child: Hero(
-                                      tag: snapshot.data,
-                                      child: Image.file(File(snapshot.data),
-                                          fit: BoxFit.cover),))),
-                          ),
-                            // Align(alignment: Alignment.topRight,child: Icon(Icons.videocam),),
-                        );
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    },
-                  );
-                }));
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 12.0),
+          child: GridView.builder(
+              itemCount: videoList.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, childAspectRatio: 2.0 / 3.0),
+              itemBuilder: (context, index) {
+                return FutureBuilder(
+                  future: getThumbnail(videoList[index]),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Padding(
+                        padding: EdgeInsets.all(4),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Material(
+                              elevation: 6.0,
+                              child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ViewVideo(
+                                                path: videoList[index])));
+                                  },
+                                  child: Hero(
+                                    tag: snapshot.data,
+                                    child: Image.file(File(snapshot.data),
+                                        fit: BoxFit.cover),))),
+                        ),
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                );
+              }),
+        );
       }
     }
   }

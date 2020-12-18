@@ -18,10 +18,7 @@ class _ViewDownloadedImageState extends State<ViewDownloadedImage> {
     return  SafeArea(
       child: Scaffold(
         appBar: AppBar(title: Text("Image"),),
-        body: Container(
-          color: Theme.of(context).primaryColor,
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.height,
+        body: Center(
           child: Hero(
               tag: "${widget.path}",
               child: Image.file(File(widget.path))),
