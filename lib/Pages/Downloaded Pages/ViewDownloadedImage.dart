@@ -30,7 +30,7 @@ class _ViewDownloadedImageState extends State<ViewDownloadedImage> {
               heroTag: null,
               onPressed: (){
               Share.shareFiles([widget.path]);
-            },child: Icon(Icons.share_rounded,size: 26,),),
+            },child: Icon(Icons.share_rounded,size: 26,color: Theme.of(context).primaryColor,),),
             SizedBox(height: 15,),
             FloatingActionButton(
               heroTag: null,

@@ -22,7 +22,7 @@ class _DownloadedVideoPlayerState extends State<DownloadedVideoPlayer> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         FloatingActionButton(
-          child: Icon(_controller.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded , size: 26,) ,
+          child: Icon(_controller.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded , size: 26,color: Theme.of(context).primaryColor,) ,
           heroTag: null,
           onPressed: () {
             setState(() {
@@ -37,7 +37,7 @@ class _DownloadedVideoPlayerState extends State<DownloadedVideoPlayer> {
         SizedBox(height: 15.0,),
         FloatingActionButton(onPressed: (){
           Share.shareFiles([widget.path]);
-        },heroTag: null,child: Icon(Icons.share_rounded,size: 26,),),
+        },heroTag: null,child: Icon(Icons.share_rounded,size: 26,color: Theme.of(context).primaryColor,),),
         SizedBox(height: 15.0,),
         FloatingActionButton(onPressed: () async{
           try{

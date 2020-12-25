@@ -128,6 +128,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
+  open_appstore:
+    dependency: "direct main"
+    description:
+      name: open_appstore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   path:
     dependency: transitive
     description:
@@ -184,20 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4+3"
-  permission_handler:
+  permission:
     dependency: "direct main"
     description:
-      name: permission_handler
+      name: permission
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.1+1"
-  permission_handler_platform_interface:
-    dependency: transitive
-    description:
-      name: permission_handler_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
+    version: "0.1.7"
   petitparser:
     dependency: transitive
     description:

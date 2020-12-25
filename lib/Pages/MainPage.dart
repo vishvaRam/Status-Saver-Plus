@@ -1,11 +1,12 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:permission_handler/permission_handler.dart';
 import 'Videos.dart';
 import 'Images.dart';
+import 'package:open_appstore/open_appstore.dart';
 import 'Downloads.dart';
+import 'package:share/share.dart';
+import 'package:permission/permission.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -19,42 +20,100 @@ class _MainPageState extends State<MainPage> {
   String permissionStatus = "";
 
   listenForPermission() async {
-    var status = await Permission.storage.status;
+    var status =
+        await Permission.getPermissionsStatus([PermissionName.Storage]);
+    status.forEach((permission) {
+      print('${permission.permissionName}: ${permission.permissionStatus}\n');
+      setState(() {
+        permissionStatus = permission.permissionStatus.toString();
+      });
+    });
 
-    print(status);
-    switch (status) {
-      case PermissionStatus.denied:
-        await Permission.storage.request();
-        var res = await Permission.storage.status;
-        setState(() {
-          permissionStatus = res.toString();
+    switch (permissionStatus) {
+      case "PermissionStatus.deny":
+        await Permission.requestPermissions([PermissionName.Storage]);
+        var status =
+            await Permission.getPermissionsStatus([PermissionName.Storage]);
+
+        status.forEach((permission) {
+          print(
+              '${permission.permissionName}: ${permission.permissionStatus}\n');
+          setState(() {
+            permissionStatus = permission.permissionStatus.toString();
+          });
         });
         break;
 
-      case PermissionStatus.granted:
-        setState(() {
-          permissionStatus = status.toString();
+      case "PermissionStatus.allow":
+        var status =
+            await Permission.getPermissionsStatus([PermissionName.Storage]);
+
+        status.forEach((permission) {
+          print(
+              '${permission.permissionName}: ${permission.permissionStatus}\n');
+          setState(() {
+            permissionStatus = permission.permissionStatus.toString();
+          });
         });
+
         break;
 
-      case PermissionStatus.permanentlyDenied:
-        setState(() {
-          permissionStatus = status.toString();
+      case "PermissionStatus.notAgain":
+        await Permission.requestPermissions([PermissionName.Storage]);
+        var status =
+            await Permission.getPermissionsStatus([PermissionName.Storage]);
+
+        status.forEach((permission) {
+          print(
+              '${permission.permissionName}: ${permission.permissionStatus}\n');
+          setState(() {
+            permissionStatus = permission.permissionStatus.toString();
+          });
         });
+
         break;
 
-      case PermissionStatus.undetermined:
-        await Permission.storage.request();
-        var res = await Permission.storage.status;
-        print(res.toString());
-        setState(() {
-          permissionStatus = res.toString();
+      case "PermissionStatus.always":
+        await Permission.requestPermissions([PermissionName.Storage]);
+        var status =
+            await Permission.getPermissionsStatus([PermissionName.Storage]);
+
+        status.forEach((permission) {
+          print(
+              '${permission.permissionName}: ${permission.permissionStatus}\n');
+          setState(() {
+            permissionStatus = permission.permissionStatus.toString();
+          });
         });
+
         break;
 
-      case PermissionStatus.restricted:
-        setState(() {
-          permissionStatus = status.toString();
+      case "PermissionStatus.notDecided":
+        await Permission.requestPermissions([PermissionName.Storage]);
+        var status =
+            await Permission.getPermissionsStatus([PermissionName.Storage]);
+
+        status.forEach((permission) {
+          print(
+              '${permission.permissionName}: ${permission.permissionStatus}\n');
+          setState(() {
+            permissionStatus = permission.permissionStatus.toString();
+          });
+        });
+
+        break;
+
+      case "PermissionStatus.whenInUse":
+        await Permission.requestPermissions([PermissionName.Storage]);
+        var status =
+            await Permission.getPermissionsStatus([PermissionName.Storage]);
+
+        status.forEach((permission) {
+          print(
+              '${permission.permissionName}: ${permission.permissionStatus}\n');
+          setState(() {
+            permissionStatus = permission.permissionStatus.toString();
+          });
         });
         break;
     }
@@ -69,7 +128,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     print(permissionStatus);
-    if (permissionStatus == "PermissionStatus.granted") {
+    if (permissionStatus == "PermissionStatus.allow") {
       print("permission in true");
 
       return MaterialApp(
@@ -83,29 +142,76 @@ class _MainPageState extends State<MainPage> {
             length: 2,
             child: SafeArea(
               child: Scaffold(
-                // drawer: Drawer(
-                //   elevation: 12.0,
-                //   child: ListView(
-                //     children: [
-                //       ListTile(
-                //         title: Text("H1")
-                //       )
-                //     ],
-                //   ),
-                // ),
+                drawer: Drawer(
+                  elevation: 12.0,
+                  child: ListView(
+                    children: [
+                      DrawerHeader(
+                        child: Center(
+                          child: SvgPicture.asset("Assets/hello.svg",
+                              placeholderBuilder: (BuildContext context) =>
+                                  Container(
+                                      padding: const EdgeInsets.all(30.0),
+                                      child:
+                                          const CircularProgressIndicator())),
+                        ),
+                      ),
+                      // Divider(color: accentColor,height: 1,),
+                      ListTile(
+                        title: Text(
+                          "Share",
+                          style: TextStyle(color: accentColor, fontSize: 18.0),
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.share_rounded, color: accentColor),
+                          onPressed: () {
+                            Share.share(
+                                "https://play.google.com/store/apps/details?id=com.vishva.status.saver.plus",
+                                subject: "My PDF Converter plus app");
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          "Review this App",
+                          style: TextStyle(color: accentColor, fontSize: 18.0),
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.rate_review_rounded,
+                              color: accentColor),
+                          onPressed: () {
+                            OpenAppstore.launch(
+                                androidAppId: "com.vishva.status.saver.plus",
+                                iOSAppId: null);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 appBar: AppBar(
                   elevation: 0.0,
+                  centerTitle: true,
                   title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("Assets/img.png",height: 35,),
-                      SizedBox(width: 10,),
+                      Image.asset(
+                        "Assets/img.png",
+                        height: 35,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Text("Status Saver Plus"),
                     ],
                   ),
                   actions: [
                     Builder(
                       builder: (context) => IconButton(
-                          icon: Icon(Icons.download_rounded,size: 26,),
+                          icon: Icon(
+                            Icons.download_rounded,
+                            size: 26,
+                          ),
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -130,7 +236,10 @@ class _MainPageState extends State<MainPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Flexible(
-                              child: Text("Images",textAlign: TextAlign.center,),
+                              child: Text(
+                                "Images",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ],
                         ),
@@ -140,7 +249,10 @@ class _MainPageState extends State<MainPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Flexible(
-                              child: Text("Videos",textAlign: TextAlign.center,),
+                              child: Text(
+                                "Videos",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ],
                         ),
@@ -165,9 +277,29 @@ class _MainPageState extends State<MainPage> {
         home: Scaffold(
           backgroundColor: backgroundColor,
           body: Center(
-              child: Container(
-            child:
-                Text("You need to give permission for accessing your storage.",style: TextStyle(color: accentColor),),
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                child: Text(
+                  "You need to give permission for accessing your storage.",
+                  style: TextStyle(color: accentColor),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              FlatButton(
+                color: accentColor,
+                  onPressed: () {
+                    listenForPermission();
+                  },
+                  child: Text(
+                    "Give Storage Permission",
+                    style: TextStyle(color: backgroundColor, fontSize: 18.0),
+                  ))
+            ],
           )),
         ),
       );

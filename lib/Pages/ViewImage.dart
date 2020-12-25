@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:share/share.dart';
 
 
 class ViewImage extends StatefulWidget {
@@ -104,40 +105,52 @@ class _ViewImageState extends State<ViewImage> {
            ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async{
-          try{
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: null,
+            onPressed: () async{
+              try{
 
-            String path = savingPath;
-            String newFile = "$path/$fileName";
+                String path = savingPath;
+                String newFile = "$path/$fileName";
 
-            if(File(newFile).existsSync()){
-              print("Exist");
-              _scaffoldstate.currentState.showSnackBar(SnackBar(content: Text("Already exist!"), ));
-              return;
-            }
+                if(File(newFile).existsSync()){
+                  print("Exist");
+                  _scaffoldstate.currentState.showSnackBar(SnackBar(content: Text("Already exist!"), ));
+                  return;
+                }
 
-            isLoading(context,true, "");
+                isLoading(context,true, "");
 
-            File originalImageFile = File(widget.path);
+                File originalImageFile = File(widget.path);
 
-            if(!Directory(savingPath).existsSync()){
-              Directory(savingPath).createSync(recursive: true);
-            }
+                if(!Directory(savingPath).existsSync()){
+                  Directory(savingPath).createSync(recursive: true);
+                }
 
 
-            print(newFile);
-            await originalImageFile.copy(newFile);
-            isLoading(context,false, "If Image not available in gallery\n\nYou can find all images at");
-          }
-          catch(e){
-            Navigator.pop(context);
-            print(e);
-            _scaffoldstate.currentState.showSnackBar(SnackBar(content: Text("Something went wrong!"), ));
-          }
+                print(newFile);
+                await originalImageFile.copy(newFile);
+                isLoading(context,false, "If Image not available in gallery\n\nYou can find all images at");
+              }
+              catch(e){
+                Navigator.pop(context);
+                print(e);
+                _scaffoldstate.currentState.showSnackBar(SnackBar(content: Text("Something went wrong!"), ));
+              }
 
-        },
-        child: Icon(Icons.download_rounded,size: 26.0,),
+            },
+            child: Icon(Icons.download_rounded,size: 26.0,color: Theme.of(context).primaryColor,),
+          ),
+          SizedBox(height: 15.0,),
+          FloatingActionButton(
+            heroTag: null,
+            onPressed: (){
+              Share.shareFiles([widget.path]);
+            },child: Icon(Icons.share_rounded,size: 26,color: Theme.of(context).primaryColor,),),
+        ],
       ),
     )
     );

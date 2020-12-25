@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:video_player/video_player.dart';
+import 'package:share/share.dart';
 
 class ViewVideo extends StatefulWidget {
   final String path;
@@ -24,7 +25,23 @@ class _ViewVideoState extends State<ViewVideo> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         FloatingActionButton(
-          child: Icon(Icons.download_rounded,size: 26,),
+          child: Icon(_controller.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded , size: 26,color:Theme.of(context).primaryColor) ,
+          heroTag: null,
+          onPressed: () {
+            setState(() {
+              if(_controller.value.isPlaying){
+                _controller.pause();
+              }else{
+                _controller.play();
+              }
+            });
+          },
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        FloatingActionButton(
+          child: Icon(Icons.download_rounded,size: 26,color: Theme.of(context).primaryColor,),
           heroTag: null,
           onPressed: () async {
             try{
@@ -59,21 +76,14 @@ class _ViewVideoState extends State<ViewVideo> {
           },
         ),
         SizedBox(
-          height: 10.0,
+          height: 15.0,
         ),
         FloatingActionButton(
-          child: Icon(_controller.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded , size: 26,) ,
           heroTag: null,
-          onPressed: () {
-            setState(() {
-              if(_controller.value.isPlaying){
-                _controller.pause();
-              }else{
-                _controller.play();
-              }
-            });
-          },
-        )
+          onPressed: (){
+            Share.shareFiles([widget.path]);
+          },child: Icon(Icons.share_rounded,size: 26,color: Theme.of(context).primaryColor,),),
+
       ],
     );
   }
