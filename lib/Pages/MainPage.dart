@@ -167,7 +167,7 @@ class _MainPageState extends State<MainPage> {
                           onPressed: () {
                             Share.share(
                                 "https://play.google.com/store/apps/details?id=com.vishva.status.saver.plus",
-                                subject: "My PDF Converter plus app");
+                                subject: "Status Saver Plus App");
                           },
                         ),
                       ),
