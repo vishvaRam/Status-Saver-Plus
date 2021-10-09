@@ -4,6 +4,8 @@ import './Downloaded Pages/Downloaded Image.dart';
 import './Downloaded Pages/Downloaded Videos.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'ColorTheming.dart';
+
 class Downloads extends StatefulWidget {
   @override
   _DownloadsState createState() => _DownloadsState();
@@ -11,8 +13,8 @@ class Downloads extends StatefulWidget {
 
 class _DownloadsState extends State<Downloads> {
 
-  String imagePath = "/storage/emulated/0/Status Saver/Images";
-  String videosPath = "/storage/emulated/0/Status Saver/Videos";
+  String imagePath = "/storage/emulated/0/Pictures/Status Saver Plus";
+  String videosPath = "/storage/emulated/0/Pictures/Status Saver Plus";
   bool isSaved = false;
   bool images = true;
   bool videos = true;
@@ -105,7 +107,8 @@ class _DownloadsState extends State<Downloads> {
           child: Scaffold(
             backgroundColor:  Theme.of(context).primaryColor,
             appBar: AppBar(
-          title: Text("Saved"),
+              backgroundColor: backgroundColor,
+              title: Text("Saved"),
         ),
         body: Center(
           child: Padding(
@@ -126,17 +129,19 @@ class _DownloadsState extends State<Downloads> {
       return DefaultTabController(length: 2, child: SafeArea( child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
+          backgroundColor: backgroundColor,
           title: Text("Saved"),
           bottom: TabBar(
-            unselectedLabelColor: Theme.of(context).accentColor,
+            unselectedLabelColor: accentColor,
             indicatorSize: TabBarIndicatorSize.label,
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
-              color: Theme.of(context).accentColor,
+              color: accentColor,
             ),
-            indicatorColor: Theme.of(context).accentColor,
-            labelColor: Theme.of(context).primaryColor,
+            indicatorColor: accentColor,
+            labelColor: backgroundColor,
             tabs: [
+
               Tab(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

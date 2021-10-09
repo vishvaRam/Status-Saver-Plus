@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:permission_handler/permission_handler.dart';
+import 'ColorTheming.dart';
 import 'Videos.dart';
 import 'Images.dart';
 import 'package:open_appstore/open_appstore.dart';
@@ -14,14 +14,14 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final Color backgroundColor = Color(0xff1C1D36);
-  final Color accentColor = Color(0xff4FE3C1);
+
 
   String permissionStatus = "";
 
   listenForPermission() async {
     var status =
         await Permission.getPermissionsStatus([PermissionName.Storage]);
+
     status.forEach((permission) {
       print('${permission.permissionName}: ${permission.permissionStatus}\n');
       setState(() {
@@ -130,18 +130,19 @@ class _MainPageState extends State<MainPage> {
     print(permissionStatus);
     if (permissionStatus == "PermissionStatus.allow") {
       print("permission in true");
-
       return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               brightness: Brightness.light,
               primaryColor: backgroundColor,
               canvasColor: backgroundColor,
-              accentColor: accentColor),
+              colorScheme:
+                  ColorScheme.fromSwatch().copyWith(secondary: accentColor)),
           home: DefaultTabController(
             length: 2,
             child: SafeArea(
               child: Scaffold(
+                backgroundColor: backgroundColor,
                 drawer: Drawer(
                   elevation: 12.0,
                   child: ListView(
@@ -190,6 +191,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 appBar: AppBar(
+                  backgroundColor: backgroundColor,
                   elevation: 0.0,
                   centerTitle: true,
                   title: Row(
@@ -291,7 +293,7 @@ class _MainPageState extends State<MainPage> {
                 height: 20,
               ),
               FlatButton(
-                color: accentColor,
+                  color: accentColor,
                   onPressed: () {
                     listenForPermission();
                   },

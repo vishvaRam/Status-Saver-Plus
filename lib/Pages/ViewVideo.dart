@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:video_player/video_player.dart';
 import 'package:share/share.dart';
 
+import 'ColorTheming.dart';
+
 class ViewVideo extends StatefulWidget {
   final String path;
   ViewVideo({this.path});
@@ -17,7 +19,7 @@ class _ViewVideoState extends State<ViewVideo> {
   Future<void> _initVideoPlayerFuture;
   final GlobalKey<ScaffoldState> _scaffoldVideo = GlobalKey<ScaffoldState>();
 
-  String savingPath = "/storage/emulated/0/Status Saver/Videos";
+  String savingPath = "/storage/emulated/0/Pictures/Status Saver Plus";
   String fileName = "";
 
   Widget floatingActionBtn() {
@@ -122,7 +124,7 @@ class _ViewVideoState extends State<ViewVideo> {
                         Padding(padding: EdgeInsets.all(10.0),),
                         Text(str,style:TextStyle( fontSize:16.0,color: Colors.white ),textAlign: TextAlign.center,),
                         Padding(padding: EdgeInsets.all(10.0),),
-                        Text("FileManager > Status Saver > Videos",style:TextStyle( fontSize:16.0, color: Theme.of(context).accentColor )),
+                        Center(child: Text("FileManager > Pictures > Status Saver Plus",style:TextStyle( fontSize:16.0, color: Theme.of(context).accentColor ))),
                         Padding(padding: EdgeInsets.all(10.0),),
                         MaterialButton(
                           child: Text("Close"),
@@ -169,6 +171,7 @@ class _ViewVideoState extends State<ViewVideo> {
         child: Scaffold(
           key: _scaffoldVideo,
       appBar: AppBar(
+        backgroundColor: backgroundColor,
         title: Text("Video"),
       ),
       body: Container(

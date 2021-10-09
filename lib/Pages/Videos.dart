@@ -7,6 +7,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 final Directory videoDir =
     new Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
+final Directory newVidDir =
+new Directory('/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses/');
+
 
 class Videos extends StatefulWidget {
   @override
@@ -35,11 +38,25 @@ class _VideosState extends State<Videos> with AutomaticKeepAliveClientMixin {
 
   getVideos() async {
     try {
-      videoList = videoDir
-          .listSync()
-          .map((item) => item.path)
-          .where((item) => item.endsWith(".mp4"))
-          .toList(growable: false);
+      if(newVidDir.existsSync()){
+        print("Exist");
+        print(
+            "/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses");
+        videoList = newVidDir
+            .listSync()
+            .map((item) => item.path)
+            .where((item) => item.endsWith(".mp4"))
+            .toList(growable: false);
+        print(videoList.length);
+      }
+      if (videoDir.existsSync()) {
+        videoList = videoDir
+            .listSync()
+            .map((item) => item.path)
+            .where((item) => item.endsWith(".mp4"))
+            .toList(growable: false);
+        print(videoList.length);
+      }
     } catch (e) {
       print(e);
     }
@@ -62,7 +79,7 @@ class _VideosState extends State<Videos> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (!Directory('${videoDir.path}').existsSync()) {
+    if (!Directory(videoDir.path).existsSync()  && !Directory(newVidDir.path).existsSync() ) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
         child: Center(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 import 'dart:io';
 import 'package:share/share.dart';
+import 'package:statusdownloaderplus/Pages/ColorTheming.dart';
 
 class ViewDownloadedImage extends StatefulWidget {
   final String path;
@@ -17,11 +19,13 @@ class _ViewDownloadedImageState extends State<ViewDownloadedImage> {
   Widget build(BuildContext context) {
     return  SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text("Image"),),
+        appBar: AppBar(title: Text("Image"),backgroundColor: backgroundColor,),
         body: Center(
           child: Hero(
               tag: "${widget.path}",
-              child: Image.file(File(widget.path))),
+              child:PhotoView(
+                imageProvider: FileImage(File(widget.path)),
+              )),
         ),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
